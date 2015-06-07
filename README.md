@@ -49,7 +49,7 @@ with the `.gitignore` file that one can use to ignore certain files.
 
 #### [TODO] Research exclude 
 
-`.git/refs/config
+`.git/refs/config`
 ```
 [core]
 	repositoryformatversion = 0
@@ -72,6 +72,7 @@ ref: refs/heads/master
 This seems to be referencing the current `HEAD`. 
 
 #### [TODO] Dive into HEAD
+#### [TODO] Explore hooks
 
 ## Adding A File
 
@@ -115,3 +116,10 @@ Once we do this, we can check out a new directory structure:
 README.md
 ```
 
+It appears we have some simple additions with adding one file. To start, we have expanded our
+info directory to now include a `logs` directory. We also have several subdirectories inside of our
+`objects` directory now, each containing a hash. refs subdirectory `heads` now includes a
+`master` file, and we also have added `COMMIT_EDITMSG`, and index at the root level of `.git`.
+Let's take a look at what each of these actually means and looks like now.
+
+#### [TODO] continue...
