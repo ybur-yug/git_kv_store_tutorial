@@ -4,6 +4,11 @@
 A lot of the time, git seems like a magic mystery to me. I decided that I would take a dive in and
 actually explore the repository structure in the mythical `.git` directory, and log my findings as
 I do this.
+ 
+## How To Read This
+If you clone this repository, inside of the `test` directory there is a separate repository. Inside of it, each commit that is
+referenced in this document has it's own hash that can be checked out to see the project at that exact state. So, everything
+down to the commit hashes will be exactly as referenced.
 
 ## Beginning
 
@@ -104,6 +109,7 @@ echo "# Git Exploration" > README.md
 git add README.md
 git commit -m 'initial commit'
 ```
+`commit 0812517d73636573118a6eef9151688be148885b`
 
 Once we do this, we can check out a new directory structure:
 
