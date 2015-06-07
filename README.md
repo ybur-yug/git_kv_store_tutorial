@@ -71,8 +71,31 @@ ref: refs/heads/master
 ```
 This seems to be referencing the current `HEAD`. 
 
+## Hooks
+Inside here, we see a `hooks/` directory. This is one of the more unique pieces compared to the rest
+of our offerings. If we open up at random:
+
+```
+#!/bin/sh
+#
+# An example hook script to verify what is about to be committed
+# by applypatch from an e-mail message.
+#
+# The hook should exit with non-zero status after issuing an
+# appropriate message if it wants to stop the commit.
+#
+# To enable this hook, rename this file to "pre-applypatch".
+
+. git-sh-setup
+test -x "$GIT_DIR/hooks/pre-commit" &&
+	exec "$GIT_DIR/hooks/pre-commit" ${1+"$@"}
+:
+```
+
+we can see that it comes with an explanation of what it is doing. We will dive further into these 
+later, but it is just important for now to know they exist.
+
 #### [TODO] Dive into HEAD
-#### [TODO] Explore hooks
 
 ## Adding A File
 
@@ -122,4 +145,9 @@ info directory to now include a `logs` directory. We also have several subdirect
 `master` file, and we also have added `COMMIT_EDITMSG`, and index at the root level of `.git`.
 Let's take a look at what each of these actually means and looks like now.
 
-#### [TODO] continue...
+#### [TODO] Objects, refs, and logs 
+
+#### [TODO] Starting a real app
+
+#### [TODO] Branching
+
