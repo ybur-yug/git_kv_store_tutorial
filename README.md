@@ -9,9 +9,7 @@ I do this.
 If you clone this repository, inside of the `test` directory there is a separate repository. Inside of it, each commit that is
 referenced in this document has it's own hash that can be checked out to see the project at that exact state. So, everything
 down to the commit hashes will be exactly as referenced.
-
-## Beginning
-
+## Beginning 
 ```bash
 mkdir git_exploration
 cd git_exploration
@@ -149,11 +147,266 @@ It appears we have some simple additions with adding one file. To start, we have
 info directory to now include a `logs` directory. We also have several subdirectories inside of our
 `objects` directory now, each containing a hash. refs subdirectory `heads` now includes a
 `master` file, and we also have added `COMMIT_EDITMSG`, and index at the root level of `.git`.
-Let's take a look at what each of these actually means and looks like now.
+
+If we examine `COMMIT_EDITMSG` we see:
+
+```
+initial commit
+
+```
+
+Logging out commit message.
+
+## Making A Branch
+Let's create a new branch to further expand this interesting `.git` directory. 
+
+```bash
+git checkout -b my_feature_branch
+```
+
+What this does is use the `git checkout` command and the `-b` flag to create and checkout a new branch
+named whatever follows `-b`. We have created a branch called `my_feature_branch`. The reason I have
+called it a feature branch specifically is because this is a common flow for managing an application's
+development with multiple authors. Let's see what changed:
+
+```bash
+  .git/
+   branches/
+    hooks/
+    info/
+      exclude
+    logs/
+    refs/
+      heads/
+        master
+        my_feature_branch
+      HEAD
+    objects/
+      08/
+      29/
+      7a/
+      info/
+      pack/
+    refs/
+      heads/
+        master
+        my_feature_branch
+      tags/
+    COMMIT_EDITMSG
+    config
+    description
+    HEAD
+    index
+  README.md
+```
+
+Now, if you look at `.git/branches/refs/heads/` we can see we have added `my_feature_branch`. If we
+look at our `HEAD` files, we will see an addition to it as well.
+
+`.git/logs/refs/HEAD`
+```
+0000000000000000000000000000000000000000 0812517d73636573118a6eef9151688be148885b bobby grayson <bobbygrayson@gmail.com> 1433706112 -0400	commit (initial): initial commit
+0812517d73636573118a6eef9151688be148885b 0812517d73636573118a6eef9151688be148885b bobby grayson <bobbygrayson@gmail.com> 1433796852 -0400	checkout: moving from master to my_feature_branch
+```
+
+`.git/refs/HEAD`
+```bash
+ref: refs/heads/my_feature_branch
+```
+
+It has logged our checkout and pointed us at the new branch. Also it is worth noting we have not created
+any new objects. This is one of the finer pieces of git, it is differentials rather than copies and 
+copies as one would have saving `my_documentv1`, `my_documentv2`, `my_documentvN` etc.
+
+Let's add another commit by creating a simple application in here and logging its boilerplate.
+
+```
+volt new some_project
+cd some_project
+git status
+# => ./
+```
+
+Okay, lets add this project and commit. If you don't have Volt installed locally, feel free to substitute it
+with anything from rails to django to meteor. It doesn't really matter for our studies here.
+
+```bash
+cd ..
+git add some_project
+git commit -m 'add boilerplate volt project'
+```
+
+Now, let us further check out our changes in the git file tree:
+
+```
+  .git/
+    branches/
+    hooks/
+    info/
+        exclude
+    logs/
+      refs/
+        heads/
+            master
+            my_feature_branch
+        HEAD
+    objects/
+      02/
+      04/
+      05/
+      08/
+      0e/
+      11/
+      22/
+      24/
+      25/
+      29/
+      32/
+      34/
+      38/
+      4d/
+      5c/
+      5d/
+      60/
+      65/
+      69/
+      77/
+      7a/
+      83/
+      88/
+      8b/
+      8e/
+      92/
+      9e/
+      b5/
+      b7/
+      c4/
+      db/
+      e2/
+      e8/
+      ef/
+      f6/
+      f8/
+      f9/
+      fe/
+      ff/
+      info/
+      pack/
+    refs/
+      heads/
+          master
+          my_feature_branch
+      tags/
+      COMMIT_EDITMSG
+      config
+      description
+      HEAD
+      index
+  some_project/
+    README.md
+```
+
+Now, if we look at `COMMIT_EDITMSG`
+
+```
+add boilerplate volt project
+```
+
+And again it is our latest message. The other major change is we have a ton of new objects.
+Just to see what happens, let's checkout master and see if anything changes:
+
+```bash
+git checkout master
+```
+
+and we get:
+
+```
+  .git/
+    branches/
+    hooks/
+    info/
+        exclude
+    logs/
+      refs/
+        HEAD
+    objects/
+      02/
+      04/
+      05/
+      08/
+      0e/
+      11/
+      22/
+      24/
+      25/
+      29/
+      32/
+      34/
+      38/
+      4d/
+      5c/
+      5d/
+      60/
+      65/
+      69/
+      77/
+      7a/
+      83/
+      88/
+      8b/
+      8e/
+      92/
+      9e/
+      b5/
+      b7/
+      c4/
+      db/
+      e2/
+      e8/
+      ef/
+      f6/
+      f8/
+      f9/
+      fe/
+      ff/
+      info/
+      pack/
+    refs/
+      heads/
+      tags/
+      COMMIT_EDITMSG
+      config
+      description
+      HEAD
+      index
+  some_project/
+    README.md
+
+```
+
+So we have the same thing, but our `HEAD` file reads:
+
+```
+ref: refs/heads/master
+```
+
+So we can now see this is our constant anchor as we navigate changes.
+
+Let's checkout our feature branch again
+
+```bash
+git checkout my_feature_branch
+```
 
 #### [TODO] Objects, refs, and logs 
 
 #### [TODO] Starting a real app
 
-#### [TODO] Branching
+#### [TODO] Stashes
 
+#### [TODO] Rebasing
+
+#### [TODO] Remotes
+
+#### [TODO] Cherry Picking
