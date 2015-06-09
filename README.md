@@ -399,6 +399,7 @@ Let's checkout our feature branch again
 git checkout my_feature_branch
 ```
 
+## Remotes
 Now, let's say we want to add a remote so that we can back up our work online. To do this is quite
 simple, we simply create the repository on Github, Bitbucket, or whatever service you choose, and
 retrieve the URL for the git repository. On Github after creating a repo called `git_test` this is
@@ -452,17 +453,16 @@ I will make some trivial change in the `README.md`.
 
 `README.md`
 ```markdown
-# Todoooooo
+...
+la dee dahh, this document is different now
 ```
 
-#### [TODO] Objects, refs, and logs 
-
-#### [TODO] Starting a real app
+#### [TODO] Objects
 
 #### [TODO] Stashes
 
+#### [TODO] Cherry Picking
+
 #### [TODO] Rebasing
 
-#### [TODO] Remotes
-
-#### [TODO] Cherry Picking
+#### [TODO] Part 2...
