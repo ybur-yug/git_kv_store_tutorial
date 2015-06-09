@@ -399,6 +399,62 @@ Let's checkout our feature branch again
 git checkout my_feature_branch
 ```
 
+Now, let's say we want to add a remote so that we can back up our work online. To do this is quite
+simple, we simply create the repository on Github, Bitbucket, or whatever service you choose, and
+retrieve the URL for the git repository. On Github after creating a repo called `git_test` this is
+what adding the remote looks like for me:
+
+```bash
+git remote add origin https://github.com/ybur-yug/git_test.git
+git push -u origin master
+```
+
+Now, I will have pushed all of the changes to that repository. Let's see what changes it has induced
+in our directory:
+
+```
+  .git/
+    branches/
+    hooks/
+     info/
+       exclude
+    logs/
+      refs/
+        heads/
+          master
+          my_feature_branch
+        remotes/
+          origin/
+            master
+      HEAD
+    objects/
+    refs/
+      heads/
+        master
+        my_feature_branch
+      remotes/
+        origin/
+          master
+    tags/
+    COMMIT_EDITMSG
+    config
+    description
+    HEAD
+    index
+```
+
+Not a ton of changes now. We simply head added a `remotes` directory in refs, and also in `logs/refs`.
+Again, without any duplication we have made it even more simple and cohesive to back up and alter our
+project.
+
+Now, let's make a change in the remote and attempt to pull and merge it. In the web editor on Github
+I will make some trivial change in the `README.md`.
+
+`README.md`
+```markdown
+# Todoooooo
+```
+
 #### [TODO] Objects, refs, and logs 
 
 #### [TODO] Starting a real app
