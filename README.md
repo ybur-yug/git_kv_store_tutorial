@@ -576,7 +576,7 @@ Well it turns out git just keeps some headers with these SHA-1's, and does a bun
 only has to track changes. Not entire new versions of each document. So each of these objects simply
 represents a given state of some blob of our data.'
 
-## Part 2: Building an Application With Git as a Database
+## Git as a Key:Value Store
 
 ### Note: Do not use this for real software
 
