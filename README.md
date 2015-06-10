@@ -580,6 +580,8 @@ represents a given state of some blob of our data.'
 
 ### Note: Do not use this for real software
 
+### Addendum: Apparently [crates.io](http://crates.io) does this, and those guys are wicked smart, so maybe its a good idea but definitely not at this capacity we are building
+
 Since the `cat-file` and `hash_object` pattern functions simply as a key:value store for git, we
 can utilize this to our advantage. Normal storing large strings in-memory in Ruby can get quite
 taxing, but if we simply store the string of the SHA-1 hash to a given key, we can greatly reduce
