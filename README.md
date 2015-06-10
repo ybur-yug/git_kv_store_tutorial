@@ -648,10 +648,204 @@ Well it turns out git just keeps some headers with these SHA-1's, and does a bun
 only has to track changes. Not entire new versions of each document. So each of these objects simply
 represents a given state of some blob of our data.'
 
-#### Trees..
+#### Part 2: Building an Application With Git as a Database
+Since the `cat-file` and `hash_object` pattern functions simply as a key:value store for git, we
+can utilize this to our advantage. Normal storing large strings in-memory in Ruby can get quite
+taxing, but if we simply store the string of the SHA-1 hash to a given key, we can greatly reduce
+the memory footprint of our master dictionary and allow it to grow far larger in size (theoretically).
+So, let's code up a pseudo-class for this and fill it in after we get that far.
 
-#### Commits..
+`vim git_database.rb`
+```ruby
+module GitDatabase
+  class Database
+    def initialize
+      # set initliazers and master dictionary
+    end
 
-#### Polish...finally getting close
+    def set
+      # set a given key to a value
+    end
 
-#### [TODO] Part 2: Building an Application With Git as a Database
+    def get
+      # get a given key's value
+    end
+
+    def hash_object
+      # hash a given input that is coerced to a string
+    end
+
+    def cat_file
+      # cat out a given file based on SHA-1 hash
+    end
+  end
+end
+```
+
+We can now tackle this piece by piece.
+
+#### Initializers
+
+`vim git_database.rb`
+```ruby
+...
+  class Database
+    attr_accessor :items
+
+    def initialize
+      @items = {}
+      `git init`
+    end
+...
+
+```
+
+Simple enough. We ensure we have a git repository initialized, and we ensure that we setup our
+master dictionary.
+
+#### Hashing
+`vim git_database.rb`
+```ruby
+...
+    def hash_object(string)
+      # What do we do?
+    end
+...
+```
+
+Well, to start, lets fire up irb and see what we can do calling git from Ruby.
+
+```
+irb
+irb(main):001:0> string = "test"
+=> "test"
+irb(main):002:0> `echo #{string}`
+=> "test\n"
+irb(main):003:0> `echo #{string} | git hash-object -w --stdin`
+=> "9daeafb9864cf43055ae93beb0afd6c7d144bfa4\n"
+irb(main):004:0> `echo #{string} | git hash-object -w --stdin`.strip!
+=> "9daeafb9864cf43055ae93beb0afd6c7d144bfa4"
+```
+
+So, it appears we can essentially call exactly what we were prior. We can now reasonable change the
+function to be:
+
+```ruby
+...
+    def hash_object(data)
+      `echo #{data} | git hash-object -w --stdin`.strip!
+    end
+...
+```
+
+And this will get that blob hashed up and stored for us. Now, notice we get the exact hash here, but if
+we do a 
+
+`find .git/objects -type f`
+
+and look at a sampling of what we get:
+
+```
+.git/objects/e4/ea753518a47496350473b8eb0972ad2985d964
+```
+
+You might notice that objects has subdirectories of seemingly random 2 letter combos. There are the first 2
+characters of the hash, but git does this to save on overhead. So, if looking in the git directory for hashes
+you must account for the parent directory of the longer string to get the entire SHA-1.
+
+#### Cattin'
+Since the prior method returns us a hash directly, we can use the same command as earlier and interpolate.
+
+```ruby
+...
+    def cat_file(hash)
+      `git cat-file -p #{hash}`
+    end
+...
+```
+
+And now we just need a way to map keys to the hashes we have saved. 
+
+#### Set
+```ruby
+...
+    def set
+      # get key, data
+      # hash data
+      # save key to SHA-1 hash in @items
+    end
+...
+```
+
+This is a reasonable fleshed out idea of a simple set implementation. So, first we need to take in a key:
+
+```ruby
+...
+    def set(key, value)
+      hash = hash_object(value.to_s)
+      @items[key] = value
+    end
+...
+```
+
+And now, we can move onto a get implementation
+
+#### Get
+To get, we have a little more to do. We will have a key, and that gets us an SHA-1 hash. However,
+we still need to decrypt it using our `cat_file` function. So, if we pseudocode this out:
+
+```ruby
+...
+    def get 
+      # find hash by key 
+      # cat-file hash 
+    end
+...
+```
+
+So, with our functions already set up we can simply go in and do this:
+
+```ruby
+...
+    def get(key)
+      cat_file(@items[key.to_s])
+    end
+...
+
+```
+
+And now, we have a finished class that can function as a reasonable minimal database. Consider
+it an equally ghetto but more interesting version of the good 'ole CSV store.
+
+```ruby
+module GitDatabase
+  class Database 
+    attr_accessor :items
+    def initialize
+      `git init`
+      @items = {}
+    end
+   
+    def set(key, value)
+      hash = hash_object(value)
+      @items[key] = hash 
+    end
+
+    def get(key)
+      cat_file(@items[key.to_s])
+    end
+
+    def hash_object(data)
+      `echo #{data.to_s} | git hash-object -w --stdin`.strip!
+    end
+
+    def cat_file(hash)
+      `git cat-file -p #{hash}`
+    end
+  end
+end
+```
+
+Well, I guess thats it. 
+
+#### Todo: Gemmify and publish
