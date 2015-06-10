@@ -1,9 +1,9 @@
 # Git Exploration
 
 ## How To Read This
-If you clone this repository, inside of the `test` directory there is a separate repository. Inside of it, each commit that is
-referenced in this document has it's own hash that can be checked out to see the project at that exact state. So, everything
-down to the commit hashes will be exactly as referenced.
+If you clone this repository, inside [this repository](https://www.github.com/ybur-yug/git_test) the commits each
+referenced in this document have a listed hash that can be checked out to see the project at that exact state. So, everything
+down to the commit hashes will be exactly as referenced in this sister repository.
 
 ## Why?
 A lot of the time, git seems like a magic mystery to me. I decided that I would take a dive in and
@@ -518,7 +518,7 @@ And then,
 
 Note that the use of `-am` is the equivalent of doing a `git add .` before using the `commit` command.
 
-#### Stashes
+## Stashes
 Now, sometimes you may have work you dont want to commit, but are quite interested in keeping for
 use after a merge or pull. Enter `git stash`. It is exactly what it sounds like. Let's try something:
 
@@ -583,7 +583,7 @@ our work and move into the next section: Objects.
 `commit eeec611ef4e608a94ea517c10c01daa500f73a57`
 
 
-#### Objects
+## Objects
 ```bash
 $ find .git/objects
 .git/objects/pack
