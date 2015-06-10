@@ -1,14 +1,15 @@
 # Git Exploration
 
-## Why?
-A lot of the time, git seems like a magic mystery to me. I decided that I would take a dive in and
-actually explore the repository structure in the mythical `.git` directory, and log my findings as
-I do this.
- 
 ## How To Read This
 If you clone this repository, inside of the `test` directory there is a separate repository. Inside of it, each commit that is
 referenced in this document has it's own hash that can be checked out to see the project at that exact state. So, everything
 down to the commit hashes will be exactly as referenced.
+
+## Why?
+A lot of the time, git seems like a magic mystery to me. I decided that I would take a dive in and
+actually explore the repository structure in the mythical `.git` directory, and log my findings as     8====D~~~
+I do this.
+ 
 ## Beginning 
 ```bash
 mkdir git_exploration
@@ -251,47 +252,6 @@ Now, let us further check out our changes in the git file tree:
             my_feature_branch
         HEAD
     objects/
-      02/
-      04/
-      05/
-      08/
-      0e/
-      11/
-      22/
-      24/
-      25/
-      29/
-      32/
-      34/
-      38/
-      4d/
-      5c/
-      5d/
-      60/
-      65/
-      69/
-      77/
-      7a/
-      83/
-      88/
-      8b/
-      8e/
-      92/
-      9e/
-      b5/
-      b7/
-      c4/
-      db/
-      e2/
-      e8/
-      ef/
-      f6/
-      f8/
-      f9/
-      fe/
-      ff/
-      info/
-      pack/
     refs/
       heads/
           master
@@ -331,47 +291,6 @@ and we get:
       refs/
         HEAD
     objects/
-      02/
-      04/
-      05/
-      08/
-      0e/
-      11/
-      22/
-      24/
-      25/
-      29/
-      32/
-      34/
-      38/
-      4d/
-      5c/
-      5d/
-      60/
-      65/
-      69/
-      77/
-      7a/
-      83/
-      88/
-      8b/
-      8e/
-      92/
-      9e/
-      b5/
-      b7/
-      c4/
-      db/
-      e2/
-      e8/
-      ef/
-      f6/
-      f8/
-      f9/
-      fe/
-      ff/
-      info/
-      pack/
     refs/
       heads/
       tags/
