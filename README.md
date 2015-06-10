@@ -1,12 +1,14 @@
-# Git Exploration
+# Exlporing Git: From git init to a KV store 
 
-## How To Read This
-If you clone this repository, inside [this repository](https://www.github.com/ybur-yug/git_test) the commits each
-referenced in this document have a listed hash that can be checked out to see the project at that exact state. So, everything
-down to the commit hashes will be exactly as referenced in this sister repository. 
+## Why?
+It was a good excuse to get to know git's innards a bit better, as well as work on something
+that, while somewhat useless, is technically functional and interesting.
 
-#### Note: As this went on, I got more interested in using git as a poor mans database of sorts. So, here it sits this way. Some sections may be a bit useless, but I'll be editing.
- 
+## For Who?
+Anyone with a casual knowledge of git shouldn't get too lost and hopefully learns something.
+Ambitious beginners are more than welcome, and [tweet me](https://www.twitter.com/yburyug) if something comes up
+that you think could make it better :)
+
 ## Beginning 
 ```bash
 mkdir git_exploration
@@ -25,8 +27,7 @@ ls -a
 And if we check out the `.git` subdirectory in our editor:
 
 `vim .git`
-
-Note that I use vim, but any editor will do. Sublime Text, Textmate, RubyMine, Notepad++, etc will
+Note that I use vim+NERDTree, but any editor will do. Sublime Text, Textmate, RubyMine, Notepad++, etc will
 work. All you need is a file tree browser to view this.
 
 ```
@@ -59,9 +60,7 @@ here.
 
 Okay, so it appears that this opens up with the command that the system would use to govern this
 behaviour. Knowing a bit about git, one can reasonably infer that this is going to work in hijinks
-with the `.gitignore` file that one can use to ignore certain files. We will go into more with this
-later.
-
+with the `.gitignore` file that one can use to ignore certain files.
 
 `.git/refs/config`
 ```
@@ -86,8 +85,7 @@ ref: refs/heads/master
 This seems to be referencing the current `HEAD`. 
 
 #### HEAD
-HEAD is a reference to the last commit in the current checked out branch. We will learn more about
-this implicitly as we continue because we will continue to reference it as we dive further.
+HEAD is a reference to the last commit in the current checked out branch. 
 
 ## Adding A File
 
@@ -96,7 +94,6 @@ echo "# Git Exploration" > README.md
 git add README.md
 git commit -m 'initial commit'
 ```
-`commit 229feab9dbc275da07f25ce950630258d8e5ed0c`
 
 Once we do this, we can check out a new directory structure:
 
@@ -207,11 +204,11 @@ It has logged our checkout and pointed us at the new branch. Also it is worth no
 any new objects. This is one of the finer pieces of git, it is differentials rather than copies and 
 copies as one would have saving `my_documentv1`, `my_documentv2`, `my_documentvN` etc.
 
-Let's add another commit by creating a simple application in here and logging its boilerplate.
+Let's add another commit by creating a directory in here and logging its boilerplate.
 
 ```
-volt new some_project
-cd some_project
+mkdir test && echo "test > test/file.txt
+cd test
 git status
 # => ./
 ```
@@ -221,10 +218,9 @@ with anything from rails to django to meteor. It doesn't really matter for our s
 
 ```bash
 cd ..
-git add some_project
-git commit -m 'add boilerplate volt project'
+git add test 
+git commit -m 'add file + dir'
 ```
-`commit c8043ae6c6fa3a04b42c0110c7d8f37860015a20`
 
 Now, let us further check out our changes in the git file tree:
 
@@ -258,7 +254,7 @@ Now, let us further check out our changes in the git file tree:
 Now, if we look at `COMMIT_EDITMSG`
 
 ```
-add boilerplate volt project
+add file + dir
 ```
 
 And again it is our latest message. The other major change is we have a ton of new objects.
@@ -288,8 +284,8 @@ and we get:
       description
       HEAD
       index
-  some_project/
-    README.md
+  test/
+    file.txt
 
 ```
 
@@ -315,50 +311,7 @@ master. This is quite simple, we will have no conflicts. To merge one branch wit
 
 or
 
-```bash
-bobby@bobdawg-devbox:~/code/git_test$ git merge my_feature_branch master
-Updating 229feab..c8043ae
-Fast-forward
-some_project/.gitignore                                                    |  9 ++++++++
-some_project/Gemfile                                                       | 29 +++++++++++++++++++++++++
-some_project/README.md                                                     |  4 ++++
-some_project/app/main/assets/css/app.css.scss                              |  1 +
-some_project/app/main/config/dependencies.rb                               | 11 ++++++++++
-some_project/app/main/config/routes.rb                                     | 11 ++++++++++
-some_project/app/main/controllers/main_controller.rb                       | 27 ++++++++++++++++++++++++
-some_project/app/main/models/user.rb                                       |  4 ++++
-some_project/app/main/views/main/about.html                                |  7 ++++++
-some_project/app/main/views/main/index.html                                |  6 ++++++
-some_project/app/main/views/main/main.html                                 | 29 +++++++++++++++++++++++++
-some_project/config.ru                                                     |  4 ++++
-some_project/config/app.rb                                                 | 41 ++++++++++++++++++++++++++++++++++++
-some_project/config/base/index.html                                        | 16 ++++++++++++++
-.../spec/app/main/controllers/server/sample_http_controller_spec.rb        |  5 +++++
-some_project/spec/app/main/integration/sample_integration_spec.rb          | 11 ++++++++++
-some_project/spec/app/main/models/sample_model_spec.rb                     |  5 +++++
-some_project/spec/app/main/tasks/sample_task_spec.rb                       |  5 +++++
-some_project/spec/spec_helper.rb                                           | 14 ++++++++++++
-19 files changed, 239 insertions(+)
-create mode 100644 some_project/.gitignore
-create mode 100644 some_project/Gemfile
-create mode 100644 some_project/README.md
-create mode 100644 some_project/app/main/assets/css/app.css.scss
-create mode 100644 some_project/app/main/config/dependencies.rb
-create mode 100644 some_project/app/main/config/routes.rb
-create mode 100644 some_project/app/main/controllers/main_controller.rb
-create mode 100644 some_project/app/main/models/user.rb
-create mode 100644 some_project/app/main/views/main/about.html
-create mode 100644 some_project/app/main/views/main/index.html
-create mode 100644 some_project/app/main/views/main/main.html
-create mode 100644 some_project/config.ru
-create mode 100644 some_project/config/app.rb
-create mode 100644 some_project/config/base/index.html
-create mode 100644 some_project/spec/app/main/controllers/server/sample_http_controller_spec.rb
-create mode 100644 some_project/spec/app/main/integration/sample_integration_spec.rb
-create mode 100644 some_project/spec/app/main/models/sample_model_spec.rb
-create mode 100644 some_project/spec/app/main/tasks/sample_task_spec.rb
-create mode 100644 some_project/spec/spec_helper.rb
-```
+`git merge my_feature_branch master`
 
 And now we have our work in master again. Let's check out the git directory:
 
@@ -383,8 +336,8 @@ And now we have our work in master again. Let's check out the git directory:
     HEAD
     index
     ORIG_HEAD
-  some_project/
-  README.md
+  test/
+    file.txt
 ```
 
 ## Remotes
@@ -430,6 +383,8 @@ in our directory:
     description
     HEAD
     index
+  test/
+    file.txt
 ```
 
 Not a ton of changes now. We simply head added a `remotes` directory in refs, and also in `logs/refs`.
@@ -623,7 +578,7 @@ represents a given state of some blob of our data.'
 
 ## Part 2: Building an Application With Git as a Database
 
-# Note: Do not ever do this for real software
+### Note: Do not use this for real software
 
 Since the `cat-file` and `hash_object` pattern functions simply as a key:value store for git, we
 can utilize this to our advantage. Normal storing large strings in-memory in Ruby can get quite
