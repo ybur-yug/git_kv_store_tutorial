@@ -468,33 +468,114 @@ I will make some trivial change in the `README.md`.
 
 `README.md`
 ```markdown
-...
-la dee dahh, this document is different now
+# Git Explorinz
 ```
 
 And commit it. Now, doing this we can make another change locally:
 
 `vim README.md` line 1:
 ```markdown
-# Git Explorinz
+...
+la dee dahh, this document is different now
 ```
 
 Now, if we commit this:
 
-`git commit -am 'retitle README'`
+`git commit -am 'Trivial change'`
 
 and try to push we will get an error saying we need to pull from the remote since it is at a different
 state. To do this:
 
 `git pull origin master`
 
-And you will be greeted by an editor and a merge commit. Since these two place nice, we have no
-conflicts and can simply have it done automatically and just be given the option to edit the
-message.
+Now, we have a conflict. If we look at what our conflict is in README.md we get:
+
+```markdown
+<<<<<<< HEAD
+# Git Exploration
+
+la dee dahh, this document is different now
+=======
+# Git Explorinz
+>>>>>>> 8d0bedbda8bf7661687a7f1b47d178a1f2cdb9aa
+```
+
+Now this looks scary, but we can see the difference quite easily. One commit was editing the body,
+while the other the title. We can resolve this by simply changing it to:
+
+```markdown
+# Git Explorinz
+
+la dee dahh, this document is different now
+```
+
+And then, 
+
+`git commit -am 'resolve merge conflict'`
+
+Note that the use of `-am` is the equivalent of doing a `git add .` before using the `commit` command.
+
+#### Stashes
+Now, sometimes you may have work you dont want to commit, but are quite interested in keeping for
+use after a merge or pull. Enter `git stash`. It is exactly what it sounds like. Let's try something:
+
+`vim README.md`
+
+```markdown
+...
+This is a test repository. The password to the secret club is `swordfish`
+```
+
+But wait, we want to merge another remote change before we put this in. In the web UI on github we
+will change `README.md` again:
+
+```markdown
+# GIT EXPLORINZ
+...
+```
+
+Now, commit this in the web UI. But before we pull again:
+
+`git status`
+```bash
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+    modified:   README.md
+
+    no changes added to commit (use "git add" and/or "git commit -a")
+
+```
+
+Okay, now we stash that change:
+
+`git stash`
+
+And see our new status:
+
+`git status`
+```bash
+On branch master
+nothing to commit, working directory clean
+```
+
+And we can now pull:
+
+`git pull origin master`
+
+And we can get our changes back simply with:
+
+`git stash apply`
+
+This is the dead basics of stashes. But you can see the utility very clearly. Now, let's commit
+our work and move into the next section: Objects.
+
+`git commit -am 'detail clubs entry information'`
+`git push origin master`
 
 #### [TODO] Objects
-
-#### [TODO] Stashes
 
 #### [TODO] Cherry Picking
 
