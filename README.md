@@ -568,7 +568,8 @@ And we can now pull:
 
 `git pull origin master`
 
-And we can get our changes back simply with:
+And we first have to resolve the merge conflict by keeping the web UI's all-caps title, and then we commit
+that and apply our stash again by using:
 
 `git stash apply`
 
@@ -576,8 +577,81 @@ This is the dead basics of stashes. But you can see the utility very clearly. No
 our work and move into the next section: Objects.
 
 `git commit -am 'detail clubs entry information'`
+
 `git push origin master`
 
-#### [TODO] Objects
+`commit eeec611ef4e608a94ea517c10c01daa500f73a57`
+
+
+#### Objects
+```bash
+$ find .git/objects
+.git/objects/pack
+.git/objects/info
+.git/objects/b7
+.git/objects/b7/37ffe03e6f22c28bc4786f4b11925f2d864e00
+...
+.git/objects/4c
+.git/objects/4c/2be36223ca4d07cbd7ce8c28419ba1c4144334
+```
+
+Here we see a list of a butt ton of what looks like SHA-1 hashes. So what is git doing with all of
+these?
+
+Let's make a hashed git object.
+
+`echo 'test content' | git hash-object -w --stdin`
+
+```bash
+d670460b4b4aece5915caf5c68d12f560a9fe3e4
+```
+
+So, it took the string 'test content' and hashed it then spat it back out in SHA-1 form. Cool.
+
+We should examine this further.
+
+```bash
+mkdir test
+cd test
+git init
+echo "test" > test.txt
+```
+
+`git hash-object -w test.txt`
+
+`9daeafb9864cf43055ae93beb0afd6c7d144bfa4`
+
+`vim test.txt`
+```txt
+test
+test 2
+```
+
+If we save this change and run the command again:
+
+`git hash-object -w test.txt`
+
+`6375a2690c50e28c8c351fc552e2fd8a24b01031`
+
+And if we check out our objects directory we can now see what git has done:
+
+```bash
+bobby@bobdawg-devbox:~/code/git_test/test$ find .git/objects/ -type f
+.git/objects/9d/aeafb9864cf43055ae93beb0afd6c7d144bfa4
+.git/objects/63/75a2690c50e28c8c351fc552e2fd8a24b01031
+```
+
+It has a hash for each of our objects saved. Woo! But wait. We haven't committed anything. How is git
+tracking all this?
+
+Well it turns out git just keeps some headers with these SHA-1's, and does a bunch of cool stuff so it
+only has to track changes. Not entire new versions of each document. So each of these objects simply
+represents a given state of some blob of our data.'
+
+#### Trees..
+
+#### Commits..
+
+#### Polish...finally getting close
 
 #### [TODO] Part 2: Building an Application With Git as a Database
