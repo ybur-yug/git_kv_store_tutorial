@@ -1,9 +1,9 @@
 # Git Exploration
 
 ## How To Read This
-If you clone this repository, inside of the `test` directory there is a separate repository. Inside of it, each commit that is
-referenced in this document has it's own hash that can be checked out to see the project at that exact state. So, everything
-down to the commit hashes will be exactly as referenced.
+If you clone this repository, inside [this repository](https://www.github.com/ybur-yug/git_test) the commits each
+referenced in this document have a listed hash that can be checked out to see the project at that exact state. So, everything
+down to the commit hashes will be exactly as referenced in this sister repository.
 
 ## Why?
 A lot of the time, git seems like a magic mystery to me. I decided that I would take a dive in and
