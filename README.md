@@ -7,7 +7,7 @@ down to the commit hashes will be exactly as referenced.
 
 ## Why?
 A lot of the time, git seems like a magic mystery to me. I decided that I would take a dive in and
-actually explore the repository structure in the mythical `.git` directory, and log my findings as     8====D~~~
+actually explore the repository structure in the mythical `.git` directory, and log my findings as
 I do this.
  
 ## Beginning 
