@@ -3,12 +3,9 @@
 ## How To Read This
 If you clone this repository, inside [this repository](https://www.github.com/ybur-yug/git_test) the commits each
 referenced in this document have a listed hash that can be checked out to see the project at that exact state. So, everything
-down to the commit hashes will be exactly as referenced in this sister repository.
+down to the commit hashes will be exactly as referenced in this sister repository. 
 
-## Why?
-A lot of the time, git seems like a magic mystery to me. I decided that I would take a dive in and
-actually explore the repository structure in the mythical `.git` directory, and log my findings as
-I do this.
+#### Note: As this went on, I got more interested in using git as a poor mans database of sorts. So, here it sits this way. Some sections may be a bit useless, but I'll be editing.
  
 ## Beginning 
 ```bash
@@ -87,30 +84,6 @@ Here it seems we can name our little project
 ref: refs/heads/master
 ```
 This seems to be referencing the current `HEAD`. 
-
-## Hooks
-Inside here, we see a `hooks/` directory. This is one of the more unique pieces compared to the rest
-of our offerings. If we open up at random:
-
-```
-#!/bin/sh
-#
-# An example hook script to verify what is about to be committed
-# by applypatch from an e-mail message.
-#
-# The hook should exit with non-zero status after issuing an
-# appropriate message if it wants to stop the commit.
-#
-# To enable this hook, rename this file to "pre-applypatch".
-
-. git-sh-setup
-test -x "$GIT_DIR/hooks/pre-commit" &&
-	exec "$GIT_DIR/hooks/pre-commit" ${1+"$@"}
-:
-```
-
-we can see that it comes with an explanation of what it is doing. We will dive further into these 
-later, but it is just important for now to know they exist.
 
 #### HEAD
 HEAD is a reference to the last commit in the current checked out branch. We will learn more about
@@ -648,7 +621,7 @@ Well it turns out git just keeps some headers with these SHA-1's, and does a bun
 only has to track changes. Not entire new versions of each document. So each of these objects simply
 represents a given state of some blob of our data.'
 
-#### Part 2: Building an Application With Git as a Database
+## Part 2: Building an Application With Git as a Database
 Since the `cat-file` and `hash_object` pattern functions simply as a key:value store for git, we
 can utilize this to our advantage. Normal storing large strings in-memory in Ruby can get quite
 taxing, but if we simply store the string of the SHA-1 hash to a given key, we can greatly reduce
@@ -846,6 +819,9 @@ module GitDatabase
 end
 ```
 
-Well, I guess thats it. 
+Well, I guess thats it. For now.
 
-#### Todo: Gemmify and publish
+#### Todos
+- gemmify
+- store type
+- different tables via branching?
