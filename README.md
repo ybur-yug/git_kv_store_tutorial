@@ -777,10 +777,27 @@ module GitDatabase
 end
 ```
 
-Well, I guess thats it. For now.
+Now, to use this. We can make a very simple sinatra API to take input remotely:
 
-#### Todos
-- gemmify
-- store type
-- different tables via branching?
-- write it in rust for ultra-level speed?
+```ruby
+... # below the class
+require 'sinatra'
+require 'json'
+DB = GitDatabase::Database.new
+post '/set' do
+  DB.set(params['key'], params['value']
+  rescue
+    { error: 'please send key and value parameters' }.to_json
+  end
+end
+
+get '/get/:key' do
+  { result: DB.get(params['key'] }.to_json
+end
+```
+
+This is a very simple wrapper, but if gives the general idea of where you could take this with a toy application.
+
+
+## Happy Hacking
+
