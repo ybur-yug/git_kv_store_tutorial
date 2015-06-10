@@ -577,8 +577,6 @@ our work and move into the next section: Objects.
 
 #### [TODO] Objects
 
-#### [TODO] Cherry Picking
-
 #### [TODO] Rebasing
 
-#### [TODO] Part 2...
+#### [TODO] Part 2: Building an Application With Git as a Database
