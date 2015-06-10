@@ -20,6 +20,19 @@ git init
 This gets us a git repo created. Let's check out what we have:
 
 ```
+ls -a
+. .. .git
+
+```
+
+And if we check out the `.git` subdirectory in our editor:
+
+`vim .git`
+
+Note that I use vim, but any editor will do. Sublime Text, Textmate, RubyMine, Notepad++, etc will
+work. All you need is a file tree browser to view this.
+
+```
 .git/
   branches/
   hooks/
@@ -27,8 +40,7 @@ This gets us a git repo created. Let's check out what we have:
     exclude
   objects
     info/
-    pack/
-  refs/
+    pack/ refs/
     heads/
     tags/
   config
@@ -47,11 +59,12 @@ here.
 # *.[oa]
 # *~
 ```
+
 Okay, so it appears that this opens up with the command that the system would use to govern this
 behaviour. Knowing a bit about git, one can reasonably infer that this is going to work in hijinks
-with the `.gitignore` file that one can use to ignore certain files.
+with the `.gitignore` file that one can use to ignore certain files. We will go into more with this
+later.
 
-#### [TODO] Research exclude 
 
 `.git/refs/config`
 ```
@@ -99,7 +112,9 @@ test -x "$GIT_DIR/hooks/pre-commit" &&
 we can see that it comes with an explanation of what it is doing. We will dive further into these 
 later, but it is just important for now to know they exist.
 
-#### [TODO] Dive into HEAD
+#### HEAD
+HEAD is a reference to the last commit in the current checked out branch. We will learn more about
+this implicitly as we continue because we will continue to reference it as we dive further.
 
 ## Adding A File
 
@@ -108,7 +123,7 @@ echo "# Git Exploration" > README.md
 git add README.md
 git commit -m 'initial commit'
 ```
-`commit 0812517d73636573118a6eef9151688be148885b`
+`commit 229feab9dbc275da07f25ce950630258d8e5ed0c`
 
 Once we do this, we can check out a new directory structure:
 
@@ -209,6 +224,7 @@ look at our `HEAD` files, we will see an addition to it as well.
 0000000000000000000000000000000000000000 0812517d73636573118a6eef9151688be148885b bobby grayson <bobbygrayson@gmail.com> 1433706112 -0400	commit (initial): initial commit
 0812517d73636573118a6eef9151688be148885b 0812517d73636573118a6eef9151688be148885b bobby grayson <bobbygrayson@gmail.com> 1433796852 -0400	checkout: moving from master to my_feature_branch
 ```
+#### TODO: update these to new repo  hashes
 
 `.git/refs/HEAD`
 ```bash
@@ -318,6 +334,86 @@ Let's checkout our feature branch again
 git checkout my_feature_branch
 ```
 
+## Merging
+Now, since we have completed some work in our feature branch, we should merge this feature into
+master. This is quite simple, we will have no conflicts. To merge one branch with another we simply
+
+`git merge branch_to_be_merged branch_to_merge_into`
+
+or
+
+```bash
+bobby@bobdawg-devbox:~/code/git_test$ git merge my_feature_branch master
+Updating 229feab..c8043ae
+Fast-forward
+some_project/.gitignore                                                    |  9 ++++++++
+some_project/Gemfile                                                       | 29 +++++++++++++++++++++++++
+some_project/README.md                                                     |  4 ++++
+some_project/app/main/assets/css/app.css.scss                              |  1 +
+some_project/app/main/config/dependencies.rb                               | 11 ++++++++++
+some_project/app/main/config/routes.rb                                     | 11 ++++++++++
+some_project/app/main/controllers/main_controller.rb                       | 27 ++++++++++++++++++++++++
+some_project/app/main/models/user.rb                                       |  4 ++++
+some_project/app/main/views/main/about.html                                |  7 ++++++
+some_project/app/main/views/main/index.html                                |  6 ++++++
+some_project/app/main/views/main/main.html                                 | 29 +++++++++++++++++++++++++
+some_project/config.ru                                                     |  4 ++++
+some_project/config/app.rb                                                 | 41 ++++++++++++++++++++++++++++++++++++
+some_project/config/base/index.html                                        | 16 ++++++++++++++
+.../spec/app/main/controllers/server/sample_http_controller_spec.rb        |  5 +++++
+some_project/spec/app/main/integration/sample_integration_spec.rb          | 11 ++++++++++
+some_project/spec/app/main/models/sample_model_spec.rb                     |  5 +++++
+some_project/spec/app/main/tasks/sample_task_spec.rb                       |  5 +++++
+some_project/spec/spec_helper.rb                                           | 14 ++++++++++++
+19 files changed, 239 insertions(+)
+create mode 100644 some_project/.gitignore
+create mode 100644 some_project/Gemfile
+create mode 100644 some_project/README.md
+create mode 100644 some_project/app/main/assets/css/app.css.scss
+create mode 100644 some_project/app/main/config/dependencies.rb
+create mode 100644 some_project/app/main/config/routes.rb
+create mode 100644 some_project/app/main/controllers/main_controller.rb
+create mode 100644 some_project/app/main/models/user.rb
+create mode 100644 some_project/app/main/views/main/about.html
+create mode 100644 some_project/app/main/views/main/index.html
+create mode 100644 some_project/app/main/views/main/main.html
+create mode 100644 some_project/config.ru
+create mode 100644 some_project/config/app.rb
+create mode 100644 some_project/config/base/index.html
+create mode 100644 some_project/spec/app/main/controllers/server/sample_http_controller_spec.rb
+create mode 100644 some_project/spec/app/main/integration/sample_integration_spec.rb
+create mode 100644 some_project/spec/app/main/models/sample_model_spec.rb
+create mode 100644 some_project/spec/app/main/tasks/sample_task_spec.rb
+create mode 100644 some_project/spec/spec_helper.rb
+```
+
+And now we have our work in master again. Let's check out the git directory:
+
+```
+  .git/
+    branches/
+    hooks/
+    info/
+      exclude
+    logs/
+      refs/
+      HEAD
+    objects/
+    refs/
+      heads/
+        master
+        my_feature_branch
+      tags/
+    COMMIT_EDITMSG
+    config
+    description
+    HEAD
+    index
+    ORIG_HEAD
+  some_project/
+  README.md
+```
+
 ## Remotes
 Now, let's say we want to add a remote so that we can back up our work online. To do this is quite
 simple, we simply create the repository on Github, Bitbucket, or whatever service you choose, and
@@ -375,6 +471,26 @@ I will make some trivial change in the `README.md`.
 ...
 la dee dahh, this document is different now
 ```
+
+And commit it. Now, doing this we can make another change locally:
+
+`vim README.md` line 1:
+```markdown
+# Git Explorinz
+```
+
+Now, if we commit this:
+
+`git commit -am 'retitle README'`
+
+and try to push we will get an error saying we need to pull from the remote since it is at a different
+state. To do this:
+
+`git pull origin master`
+
+And you will be greeted by an editor and a merge commit. Since these two place nice, we have no
+conflicts and can simply have it done automatically and just be given the option to edit the
+message.
 
 #### [TODO] Objects
 
