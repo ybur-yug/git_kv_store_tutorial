@@ -622,6 +622,9 @@ only has to track changes. Not entire new versions of each document. So each of 
 represents a given state of some blob of our data.'
 
 ## Part 2: Building an Application With Git as a Database
+
+# Note: Do not ever do this for real software
+
 Since the `cat-file` and `hash_object` pattern functions simply as a key:value store for git, we
 can utilize this to our advantage. Normal storing large strings in-memory in Ruby can get quite
 taxing, but if we simply store the string of the SHA-1 hash to a given key, we can greatly reduce
