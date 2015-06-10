@@ -518,7 +518,7 @@ And then,
 
 Note that the use of `-am` is the equivalent of doing a `git add .` before using the `commit` command.
 
-#### Stashes
+## Stashes
 Now, sometimes you may have work you dont want to commit, but are quite interested in keeping for
 use after a merge or pull. Enter `git stash`. It is exactly what it sounds like. Let's try something:
 
@@ -583,7 +583,7 @@ our work and move into the next section: Objects.
 `commit eeec611ef4e608a94ea517c10c01daa500f73a57`
 
 
-#### Objects
+## Objects
 ```bash
 $ find .git/objects
 .git/objects/pack
