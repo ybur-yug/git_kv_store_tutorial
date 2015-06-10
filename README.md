@@ -221,10 +221,9 @@ look at our `HEAD` files, we will see an addition to it as well.
 
 `.git/logs/refs/HEAD`
 ```
-0000000000000000000000000000000000000000 0812517d73636573118a6eef9151688be148885b bobby grayson <bobbygrayson@gmail.com> 1433706112 -0400	commit (initial): initial commit
-0812517d73636573118a6eef9151688be148885b 0812517d73636573118a6eef9151688be148885b bobby grayson <bobbygrayson@gmail.com> 1433796852 -0400	checkout: moving from master to my_feature_branch
+... 1433706112 -0400	commit (initial): initial commit
+... 1433796852 -0400	checkout: moving from master to my_feature_branch
 ```
-#### TODO: update these to new repo  hashes
 
 `.git/refs/HEAD`
 ```bash
@@ -252,6 +251,7 @@ cd ..
 git add some_project
 git commit -m 'add boilerplate volt project'
 ```
+`commit c8043ae6c6fa3a04b42c0110c7d8f37860015a20`
 
 Now, let us further check out our changes in the git file tree:
 
@@ -482,6 +482,7 @@ la dee dahh, this document is different now
 Now, if we commit this:
 
 `git commit -am 'Trivial change'`
+`commit bd7f97fbd35622a4d0c7540ed8f5e2598fffa455`
 
 and try to push we will get an error saying we need to pull from the remote since it is at a different
 state. To do this:
@@ -512,6 +513,8 @@ la dee dahh, this document is different now
 And then, 
 
 `git commit -am 'resolve merge conflict'`
+
+`commit 099e761c18849bffe43090b58c18cf661c30fa1c`
 
 Note that the use of `-am` is the equivalent of doing a `git add .` before using the `commit` command.
 
@@ -578,7 +581,5 @@ our work and move into the next section: Objects.
 #### [TODO] Objects
 
 #### [TODO] Cherry Picking
-
-#### [TODO] Rebasing
 
 #### [TODO] Part 2...
