@@ -828,3 +828,4 @@ Well, I guess thats it. For now.
 - gemmify
 - store type
 - different tables via branching?
+- write it in rust for ultra-level speed?
