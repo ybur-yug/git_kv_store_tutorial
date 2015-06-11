@@ -1,4 +1,4 @@
-# Exlporing Git: From git init to a KV store 
+# Exploring Git: From git init to a KV store 
 
 ## Why?
 It was a good excuse to get to know git's innards a bit better, as well as work on something
