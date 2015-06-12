@@ -207,7 +207,7 @@ copies as one would have saving `my_documentv1`, `my_documentv2`, `my_documentvN
 Let's add another commit by creating a directory in here and logging its boilerplate.
 
 ```
-mkdir test && echo "test > test/file.txt
+mkdir test && echo "test" > test/file.txt
 cd test
 git status
 # => ./
