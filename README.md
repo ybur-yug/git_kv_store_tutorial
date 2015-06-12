@@ -62,7 +62,7 @@ Okay, so it appears that this opens up with the command that the system would us
 behaviour. Knowing a bit about git, one can reasonably infer that this is going to work in hijinks
 with the `.gitignore` file that one can use to ignore certain files.
 
-`.git/refs/config`
+`.git/config`
 ```
 [core]
 	repositoryformatversion = 0
