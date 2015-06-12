@@ -72,7 +72,7 @@ with the `.gitignore` file that one can use to ignore certain files.
 ```
 It would appear this is just some general configuration for a boilerplate initialized repo.
 
-`.git/refs/description`
+`.git/description`
 ```
 Unnamed repository; edit this file 'description' to name the repository.
 ```
