@@ -573,6 +573,11 @@ So, with our functions already set up we can simply go in and do this:
 And now, we have a finished class that can function as a reasonable minimal database. Consider
 it an equally ghetto but more interesting version of the good 'ole CSV store.
 
+### Accessing Object History
+Currently we are only returning the latest version of a given item. However, we have already stored it at every
+state it hash ever been hashed. So, if we were to add in some functionality for grabbing versions, it would be
+quite simple.
+
 ```ruby
 module GitDatabase
   class Database
@@ -583,8 +588,11 @@ module GitDatabase
     end
 
     def set(key, value)
-      hash = hash_object(value)
-      @items[key] = [hash]
+      unless key in @items.keys
+        @items[key] = [hash_object(value)]
+      else
+        @items[key] << value
+      end
     end
 
     def get(key)
@@ -596,12 +604,12 @@ module GitDatabase
       @items[key][version]
     end
     
-    private
-
     def versions(key)
       @items[key].count
     end
-
+    
+    private
+    
     def hash_object(data)
       `echo #{data.to_s} | git hash-object -w --stdin`.strip!
     end
@@ -627,7 +635,7 @@ db.get("Apples")
 # => "10"
 ```
 
-Now, to use this. We can make a very simple sinatra API to take input remotely:
+Abd to use this. We can make a very simple sinatra API to take input remotely:
 
 ```ruby
 ... # below the class
