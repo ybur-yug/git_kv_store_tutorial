@@ -584,11 +584,22 @@ module GitDatabase
 
     def set(key, value)
       hash = hash_object(value)
-      @items[key] = hash
+      @items[key] = [hash]
     end
 
     def get(key)
-      cat_file(@items[key.to_s])
+      cat_file(@items[key.to_s].first)
+    end
+
+    def get_version(key, version)
+      # 0 = latest, numbers = older
+      @items[key][version]
+    end
+    
+    private
+
+    def versions(key)
+      @items[key].count
     end
 
     def hash_object(data)
@@ -600,6 +611,20 @@ module GitDatabase
     end
   end
 end
+```
+
+Now, we can do something like:
+
+```ruby
+db = GitDatabase::Database.new
+db.set("Apples", "12")
+db.get("Apples")
+# => "12"
+db.set("Apples", "10")
+db.get_version("Apples", 0)
+# => "12"
+db.get("Apples")
+# => "10"
 ```
 
 Now, to use this. We can make a very simple sinatra API to take input remotely:
