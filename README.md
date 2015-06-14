@@ -26,25 +26,43 @@ ls -a
 
 And if we check out the `.git` subdirectory in our editor:
 
-`vim .git`
-Note that I use vim+NERDTree, but any editor will do. Sublime Text, Textmate, RubyMine, Notepad++, etc will
-work. All you need is a file tree browser to view this.
+```
+$ tree .git
 
+.git
+├── branches
+├── config
+├── description
+├── HEAD
+├── hooks
+│   ├── applypatch-msg.sample
+│   ├── commit-msg.sample
+│   ├── post-update.sample
+│   ├── pre-applypatch.sample
+│   ├── pre-commit.sample
+│   ├── prepare-commit-msg.sample
+│   ├── pre-push.sample
+│   ├── pre-rebase.sample
+│   └── update.sample
+├── info
+│   └── exclude
+├── objects
+│   ├── info
+│   └── pack
+└── refs
+    ├── heads
+        └── tags
+
+9 directories, 13 files
 ```
-.git/
-  branches/
-  hooks/
-  info/
-    exclude
-  objects
-    info/
-    pack/ refs/
-    heads/
-    tags/
-  config
-  description
-  HEAD
-```
+
+A note, you may need to install tree depending on your OS. On Ubuntu, I used
+
+`sudo apt-get install tree`
+
+I imagine it is about the same on mac with `brew`. I Have no idea on Windows as I barely know how to list
+a directory in Powershell (sorry).
+
 Okay, so this doesn't look too crazy. Let's open up some of the stuff we have on initialization in
 here.
 
@@ -65,10 +83,10 @@ with the `.gitignore` file that one can use to ignore certain files.
 `.git/config`
 ```
 [core]
-	repositoryformatversion = 0
-	filemode = true
-	bare = false
-	logallrefupdates = true
+repositoryformatversion = 0
+filemode = true
+bare = false
+logallrefupdates = true
 ```
 It would appear this is just some general configuration for a boilerplate initialized repo.
 
@@ -98,35 +116,46 @@ git commit -m 'initial commit'
 Once we do this, we can check out a new directory structure:
 
 ```
-.git/
-  branches/
-  hooks/
-  info/
-    exclude
-  logs/
-    refs/
-      heads/
-        master
-    HEAD
-  objects/
-    08/
-      12517d73636573118a6ee
-    29/
-      b478dd6740a8628126c9f
-    7a/
-      07855d9fff722f83c3d60
-    info/
-    pack/
-  refs/
-    heads/
-      master
-    tags/
-    COMMIT_EDITMSG
-    config
-    description
-    HEAD
-    index
-README.md
+$ tree .git
+.git
+├── branches
+├── COMMIT_EDITMSG
+├── config
+├── description
+├── HEAD
+├── hooks
+│   ├── applypatch-msg.sample
+│   ├── commit-msg.sample
+│   ├── post-update.sample
+│   ├── pre-applypatch.sample
+│   ├── pre-commit.sample
+│   ├── prepare-commit-msg.sample
+│   ├── pre-push.sample
+│   ├── pre-rebase.sample
+│   └── update.sample
+├── index
+├── info
+│   └── exclude
+├── logs
+│   ├── HEAD
+│   └── refs
+│       └── heads
+│           └── master
+├── objects
+│   ├── 1b
+│   │   └── f567a9cee63cd3036628c1519b818461905b27
+│   ├── 9d
+│   │   └── aeafb9864cf43055ae93beb0afd6c7d144bfa4
+│   ├── c1
+│   │   └── 2d7c0ed49ad9c7aa938743ba6fdee54b6b7fe1
+│   ├── info
+│   └── pack
+└── refs
+  ├── heads
+      │   └── master
+          └── tags
+
+15 directories, 21 files
 ```
 
 It appears we have some simple additions with adding one file. To start, we have expanded our
@@ -156,34 +185,48 @@ called it a feature branch specifically is because this is a common flow for man
 development with multiple authors. Let's see what changed:
 
 ```bash
-  .git/
-   branches/
-    hooks/
-    info/
-      exclude
-    logs/
-    refs/
-      heads/
-        master
-        my_feature_branch
-      HEAD
-    objects/
-      08/
-      29/
-      7a/
-      info/
-      pack/
-    refs/
-      heads/
-        master
-        my_feature_branch
-      tags/
-    COMMIT_EDITMSG
-    config
-    description
-    HEAD
-    index
-  README.md
+$ tree .git
+.git
+├── branches
+├── COMMIT_EDITMSG
+├── config
+├── description
+├── HEAD
+├── hooks
+│   ├── applypatch-msg.sample
+│   ├── commit-msg.sample
+│   ├── post-update.sample
+│   ├── pre-applypatch.sample
+│   ├── pre-commit.sample
+│   ├── prepare-commit-msg.sample
+│   ├── pre-push.sample
+│   ├── pre-rebase.sample
+│   └── update.sample
+├── index
+├── info
+│   └── exclude
+├── logs
+│   ├── HEAD
+│   └── refs
+│       └── heads
+│           ├── master
+│           └── my_feature_branch
+├── objects
+│   ├── 1b
+│   │   └── f567a9cee63cd3036628c1519b818461905b27
+│   ├── 9d
+│   │   └── aeafb9864cf43055ae93beb0afd6c7d144bfa4
+│   ├── c1
+│   │   └── 2d7c0ed49ad9c7aa938743ba6fdee54b6b7fe1
+│   ├── info
+│   └── pack
+└── refs
+    ├── heads
+        │   ├── master
+            │   └── my_feature_branch
+                └── tags
+
+15 directories, 23 files
 ```
 
 Now, if you look at `.git/branches/refs/heads/` we can see we have added `my_feature_branch`. If we
@@ -225,30 +268,53 @@ git commit -m 'add file + dir'
 Now, let us further check out our changes in the git file tree:
 
 ```
-  .git/
-    branches/
-    hooks/
-    info/
-        exclude
-    logs/
-      refs/
-        heads/
-            master
-            my_feature_branch
-        HEAD
-    objects/
-    refs/
-      heads/
-          master
-          my_feature_branch
-      tags/
-      COMMIT_EDITMSG
-      config
-      description
-      HEAD
-      index
-  some_project/
-    README.md
+.git
+├── branches
+├── COMMIT_EDITMSG
+├── config
+├── description
+├── HEAD
+├── hooks
+│   ├── applypatch-msg.sample
+│   ├── commit-msg.sample
+│   ├── post-update.sample
+│   ├── pre-applypatch.sample
+│   ├── pre-commit.sample
+│   ├── prepare-commit-msg.sample
+│   ├── pre-push.sample
+│   ├── pre-rebase.sample
+│   └── update.sample
+├── index
+├── info
+│   └── exclude
+├── logs
+│   ├── HEAD
+│   └── refs
+│       └── heads
+│           ├── master
+│           └── my_feature_branch
+├── objects
+│   ├── 1b
+│   │   └── f567a9cee63cd3036628c1519b818461905b27
+│   ├── 2b
+│   │   └── 297e643c551e76cfa1f93810c50811382f9117
+│   ├── 5e
+│   │   └── c1f4ac6015a50b5d8462582d7ae50d7029d012
+│   ├── 70
+│   │   └── cc10cfcc770f6b0ea11cdd9a876ee1a3184d77
+│   ├── 9d
+│   │   └── aeafb9864cf43055ae93beb0afd6c7d144bfa4
+│   ├── c1
+│   │   └── 2d7c0ed49ad9c7aa938743ba6fdee54b6b7fe1
+│   ├── info
+│   └── pack
+└── refs
+    ├── heads
+        │   ├── master
+            │   └── my_feature_branch
+                └── tags
+
+18 directories, 26 files
 ```
 
 Now, if we look at `COMMIT_EDITMSG`
@@ -264,30 +330,7 @@ Just to see what happens, let's checkout master and see if anything changes:
 git checkout master
 ```
 
-and we get:
-
-```
-  .git/
-    branches/
-    hooks/
-    info/
-        exclude
-    logs/
-      refs/
-        HEAD
-    objects/
-    refs/
-      heads/
-      tags/
-      COMMIT_EDITMSG
-      config
-      description
-      HEAD
-      index
-  test/
-    file.txt
-
-```
+and we get the same tree, but we can check out our HEAD item in the `.git` directory.
 
 So we have the same thing, but our `HEAD` file reads:
 
@@ -414,27 +457,27 @@ So, let's code up a pseudo-class for this and fill it in after we get that far.
 `vim git_database.rb`
 ```ruby
 module GitDatabase
-  class Database
-    def initialize
-      # set initliazers and master dictionary
-    end
-
-    def set
-      # set a given key to a value
-    end
-
-    def get
-      # get a given key's value
-    end
-
-    def hash_object
-      # hash a given input that is coerced to a string
-    end
-
-    def cat_file
-      # cat out a given file based on SHA-1 hash
-    end
+class Database
+  def initialize
+    # set initliazers and master dictionary
   end
+
+  def set
+    # set a given key to a value
+  end
+
+  def get
+    # get a given key's value
+  end
+
+  def hash_object
+    # hash a given input that is coerced to a string
+  end
+
+  def cat_file
+    # cat out a given file based on SHA-1 hash
+  end
+end
 end
 ```
 
@@ -445,13 +488,13 @@ We can now tackle this piece by piece.
 `vim git_database.rb`
 ```ruby
 ...
-  class Database
-    attr_accessor :items
+class Database
+  attr_accessor :items
 
-    def initialize
-      @items = {}
-      `git init`
-    end
+  def initialize
+    @items = {}
+    `git init`
+  end
 ...
 
 ```
@@ -463,9 +506,9 @@ master dictionary.
 `vim git_database.rb`
 ```ruby
 ...
-    def hash_object(string)
-      # What do we do?
-    end
+  def hash_object(string)
+    # What do we do?
+  end
 ...
 ```
 
@@ -488,9 +531,9 @@ function to be:
 
 ```ruby
 ...
-    def hash_object(data)
-      `echo #{data} | git hash-object -w --stdin`.strip!
-    end
+  def hash_object(data)
+    `echo #{data} | git hash-object -w --stdin`.strip!
+  end
 ...
 ```
 
@@ -514,9 +557,9 @@ Since the prior method returns us a hash directly, we can use the same command a
 
 ```ruby
 ...
-    def cat_file(hash)
-      `git cat-file -p #{hash}`
-    end
+  def cat_file(hash)
+    `git cat-file -p #{hash}`
+  end
 ...
 ```
 
@@ -525,11 +568,11 @@ And now we just need a way to map keys to the hashes we have saved.
 #### Set
 ```ruby
 ...
-    def set
-      # get key, data
-      # hash data
-      # save key to SHA-1 hash in @items
-    end
+  def set
+    # get key, data
+    # hash data
+    # save key to SHA-1 hash in @items
+  end
 ...
 ```
 
@@ -537,10 +580,10 @@ This is a reasonable fleshed out idea of a simple set implementation. So, first 
 
 ```ruby
 ...
-    def set(key, value)
-      hash = hash_object(value.to_s)
-      @items[key] = value
-    end
+  def set(key, value)
+    hash = hash_object(value.to_s)
+    @items[key] = value
+  end
 ...
 ```
 
@@ -552,10 +595,10 @@ we still need to decrypt it using our `cat_file` function. So, if we pseudocode 
 
 ```ruby
 ...
-    def get
-      # find hash by key
-      # cat-file hash
-    end
+  def get
+    # find hash by key
+    # cat-file hash
+  end
 ...
 ```
 
@@ -563,9 +606,9 @@ So, with our functions already set up we can simply go in and do this:
 
 ```ruby
 ...
-    def get(key)
-      cat_file(@items[key.to_s])
-    end
+  def get(key)
+    cat_file(@items[key.to_s])
+  end
 ...
 
 ```
@@ -575,41 +618,41 @@ it an equally ghetto but more interesting version of the good 'ole CSV store.
 
 ```ruby
 module GitDatabase
-  class Database
-    attr_accessor :items
-    def initialize
-      `git init`
-      @items = {}
-    end
-
-    def set(key, value)
-      hash = hash_object(value)
-      @items[key] = [hash]
-    end
-
-    def get(key)
-      cat_file(@items[key.to_s].first)
-    end
-
-    def get_version(key, version)
-      # 0 = latest, numbers = older
-      @items[key][version]
-    end
-    
-    private
-
-    def versions(key)
-      @items[key].count
-    end
-
-    def hash_object(data)
-      `echo #{data.to_s} | git hash-object -w --stdin`.strip!
-    end
-
-    def cat_file(hash)
-      `git cat-file -p #{hash}`
-    end
+class Database
+  attr_accessor :items
+  def initialize
+    `git init`
+    @items = {}
   end
+
+  def set(key, value)
+    hash = hash_object(value)
+    @items[key] = [hash]
+  end
+
+  def get(key)
+    cat_file(@items[key.to_s].first)
+  end
+
+  def get_version(key, version)
+    # 0 = latest, numbers = older
+    @items[key][version]
+  end
+  
+  private
+
+  def versions(key)
+    @items[key].count
+  end
+
+  def hash_object(data)
+    `echo #{data.to_s} | git hash-object -w --stdin`.strip!
+  end
+
+  def cat_file(hash)
+    `git cat-file -p #{hash}`
+  end
+end
 end
 ```
 
@@ -635,14 +678,14 @@ require 'sinatra'
 require 'json'
 DB = GitDatabase::Database.new
 post '/set' do
-  DB.set(params['key'], params['value']
-  rescue
-    { error: 'please send key and value parameters' }.to_json
-  end
+DB.set(params['key'], params['value']
+rescue
+  { error: 'please send key and value parameters' }.to_json
+end
 end
 
 get '/get/:key' do
-  { result: DB.get(params['key'] }.to_json
+{ result: DB.get(params['key'] }.to_json
 end
 ```
 
