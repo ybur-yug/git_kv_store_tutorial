@@ -172,7 +172,9 @@ initial commit
 
 ```
 
-Logging out commit message.
+Logging our commit message.
+
+
 
 ## Making A Branch
 Let's create a new branch to further expand this interesting `.git` directory.
@@ -443,6 +445,45 @@ while still keeping our old object in history.
 What this really is at it's core is a key:value store. Using this, we can leverage
 a very simple database that only relies on single key/value types (symbol, string)
 to store any data we need to and look it up. So, let's move on.
+
+## Aside: Git: A Directed Acyclic Graph
+In the broadest of terms, git is a [directed acyclic graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph). This sounds quite fancy and/or
+scary depending on how hard in the paint you go with mathematica, but it truly isn't that crazy. 
+Let's ignore Wikipedia's terse entry, and instead break it down on our own.
+
+## Storage
+In its most basic state, git functions to make one of these graphs connecting a series of objects. These
+objects also have a handful of types.
+
+### Types
+
+#### Blob
+A `blob` is a blob of bytes. It usually is a file, but can also be a symlink or a myriad of other things.
+It is all simply semantics as long as there is a pointer to the `blob`.
+
+#### Tree
+Directories are represented by a `tree` object. They refer to `blobs` and other `trees`. When one of these nodes
+(a `tree` or a `blob`, in this case) points to another in the graph, it *depends* on that node. It is a connection
+that cannot be broken. You can garbage collect, filesystem check, and a myriad of other functions
+but we do not need to truly know more other than that without a referent of dependence, a node
+is essentially useless, as it is disconnected.
+
+#### Commit
+A `commit` refers to a tree that represents the state of a group of `blobs`' state at the time of that given
+commit. It refers to a range `X` of other commits that are its parents. More than one parent means a merge,
+no parent means an initial commit, and a single just means its a regular old commit. As we saw earlier,
+the body of a commit is its message.
+
+#### Refs
+Refs have two functions: storing `HEAD`s, and `branches`. They are essentially notes left on a given
+node. These notes can be moved around freely and arent stored in history, and arent transferred
+between repositories. They are simply a means to namespace 'I am working here'.
+
+#### Visualizing It
+[A Typical remote/local DAG](http://eagain.net/articles/git-for-computer-scientists/git-history.6.dot.svg)
+
+As you can see, these nodes form a `tree` of functioning between master and a remote with a few merges
+thrown in (any of the nodes with 2 parents).
 
 ## Git as a Key:Value Store
 
