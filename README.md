@@ -440,7 +440,7 @@ What this really is at it's core is a key:value store. Using this, we can levera
 a very simple database that only relies on single key/value types (symbol, string)
 to store any data we need to and look it up. So, let's move on.
 
-## Aside: Git: A Directed Acyclic Graph
+## Aside - Git: A Directed Acyclic Graph
 In the broadest of terms, git is a [directed acyclic graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph). This sounds quite fancy and/or
 scary depending on how hard in the paint you go with mathematica, but it truly isn't that crazy. 
 Let's ignore Wikipedia's terse entry, and instead break it down on our own.
