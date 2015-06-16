@@ -474,7 +474,7 @@ node. These notes can be moved around freely and arent stored in history, and ar
 between repositories. They are simply a means to namespace 'I am working here'.
 
 #### Visualizing It
-[A Typical remote/local DAG](http://eagain.net/articles/git-for-computer-scientists/git-history.6.dot.svg)
+![A Typical remote/local DAG](http://eagain.net/articles/git-for-computer-scientists/git-history.6.dot.svg)
 
 As you can see, these nodes form a `tree` of functioning between master and a remote with a few merges
 thrown in (any of the nodes with 2 parents).
