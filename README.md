@@ -344,12 +344,6 @@ ref: refs/heads/master
 
 So we can now see this is our constant anchor as we navigate changes.
 
-Let's checkout our feature branch again
-
-```bash
-git checkout my_feature_branch
-```
-
 ## Objects
 ```bash
 $ find .git/objects
