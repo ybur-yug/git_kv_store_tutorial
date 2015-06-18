@@ -1,6 +1,8 @@
 # Exploring Git: From git init to a KV store
 
-#### This is a talk I'm giving soon at [ColumbusRB](http://columbusrb.com), the slides can be found [here](http://slides.com/bobbygrayson/deck-1/live#/)
+#### This is a talk I gave at [ColumbusRB](http://columbusrb.com), the slides can be found [here](http://slides.com/bobbygrayson/deck-1/live#/)
+
+## You can find a more robust implementation in [this gem](https://www.github.com/ybur-yug/gkv)
 
 ## Why?
 It was a good excuse to get to know git's innards a bit better, as well as work on something
