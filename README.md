@@ -167,6 +167,9 @@ info directory to now include a `logs` directory. We also have several subdirect
 `objects` directory now, each containing a hash. refs subdirectory `heads` now includes a
 `master` file, and we also have added `COMMIT_EDITMSG`, and index at the root level of `.git`.
 
+The three hashes in our `objects` directory represent 3 data structures git utilizes. These are
+a `blob`, a `tree`, and a `commit`. We will go into these more in-depth later.
+
 If we examine `COMMIT_EDITMSG` we see:
 
 ```
